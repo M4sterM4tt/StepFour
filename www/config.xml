@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
+<widget xmlns     = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "mob.app.dev.stepFour"
+        version   = "1.0.0">
+
+    <name>Step Four</name>
+	<description>This is a Mobile Game which is only available on Android.</description>
+	<author email="WAIM1_16@uni.worc.ac.uk">Matthew Waite</author>	
+	<preference name="orientation" value="landscape" />  
+	
+</widget>
