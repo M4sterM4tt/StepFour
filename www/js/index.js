@@ -50,6 +50,7 @@ var wallAccelerationY;
 var renderTime;
 var loop;
 var loopTwo;
+var breaker;
 
 
 window.onload = function() {
@@ -182,6 +183,39 @@ function render() {
 				}
 				else {
 					wallAccelerationX[loop] = (1/100)*deviceMotionEvent.accelerationIncludingGravity.y;
+				}
+			
+			}
+			
+	
+			if (wallType[loop] == 5) {
+			
+				if (wallAccelerationX[loop]/wallAccelerationX[loop] != deviceMotionEvent.accelerationIncludingGravity/deviceMotionEvent.accelerationIncludingGravity) {
+					wallType[loop] == 7;
+					breaker = 1;	
+				}
+				else {
+					breaker = 0;
+				}
+				
+				if (wallAccelerationX[loop]/wallAccelerationX[loop] != deviceMotionEvent.accelerationIncludingGravity/deviceMotionEvent.accelerationIncludingGravity) {
+					wallType[loop] == 7;
+					breaker = 1;
+				}
+				else {
+					breaker = 0;
+				}
+			
+			}
+			
+			
+			if (wallType[loop] == 7) {
+			
+				if (wallAccelerationX[loop]/wallAccelerationX[loop] != deviceMotionEvent.accelerationIncludingGravity/deviceMotionEvent.accelerationIncludingGravity && breaker == 0) {
+					wallType[loop] == 5;
+				}
+				if (wallAccelerationX[loop]/wallAccelerationX[loop] != deviceMotionEvent.accelerationIncludingGravity/deviceMotionEvent.accelerationIncludingGravity && breaker == 0) {
+					wallType[loop] == 5;
 				}
 			
 			}
