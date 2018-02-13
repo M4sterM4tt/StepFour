@@ -14,9 +14,10 @@ var body;
 // Image Variables
 var level; 
 var otherAssets;
+var wallAssets;
 
 
-// Location Variables
+// Player Variables
 var playerPositionX;
 var playerPositionY;
 var playerVelocityX;
@@ -25,6 +26,7 @@ var playerAccelerationX;
 var playerAccelerationY;
 
 
+// Enemy Variables
 var enemyType;
 var enemyPositionX;
 var enemyPositionY;
@@ -32,6 +34,16 @@ var enemyVelocityX;
 var enemyVelocityY;
 var enemyAccelerationX;
 var enemyAccelerationY;
+
+
+// Wall Variables
+var wallType;
+var wallPositionX;
+var wallPositionY;
+var wallVelocityX;
+var wallVelocityY;
+var wallAccelerationX;
+var wallAccelerationY;
 
 
 // Other Variables
@@ -42,19 +54,21 @@ var loopTwo;
 
 window.onload = function() {
 	
-	// Canvas and Graphics context
+	
+	// Canvas, Body and Graphics context
 	canvas = document.getElementById("canvas");
     canvas.width = (9/10)*window.innerWidth;
     canvas.height = (9/10)*window.innerHeight;
 	body = canvas.getContext("2d");
 	
 	
-	// Images and variables for Images
+	// Images and Variables for Images
 	level = document.getElementById("levelBase");
 	otherAssets = [document.getElementById("playerGoal"), document.getElementById("playerBall"), document.getElementById("enemyHole"), document.getElementById("enemyBall")];
+	wallAssets = [document.getElementById("wallBase"), document.getElementById("wallArrowShake"), document.getElementById("wallArrowTilt"), document.getElementById("wallArrowTouch"), document.getElementById("wallCloudShake"), document.getElementById("wallCloudTilt"), document.getElementById("wallCloudTouch")];
 	
 	
-	// Location Variables
+	// Player Variables
 	playerPositionX = [canvas.width/4,canvas.width/2];
 	playerPositionY = [canvas.width/4,canvas.width/2];
 	playerVelocityX = 0;
@@ -63,6 +77,7 @@ window.onload = function() {
 	playerAccelerationY = 0;
 	
 	
+	// Enemy Variables
 	enemyType = [2,2,3,2,3];
 	enemyPositionX = [canvas.width/8,canvas.width/8 + canvas.width/20,canvas.width/2 + 2*canvas.width/20,canvas.width/8 + 2*canvas.width/20,canvas.width/2 + 4*canvas.width/20];
 	enemyPositionY = [canvas.width/8,canvas.width/8 + canvas.width/20,canvas.width/8 + 2*canvas.width/20,canvas.width/8 + canvas.width/20,canvas.width/8 + 2*canvas.width/20];
@@ -72,15 +87,34 @@ window.onload = function() {
 	enemyAccelerationY = [0,0,0,0,0];
 
 	
+	// Wall Variables
+	wallType = [0,1,2,3,4,5,6];
+	wallPositionX = [canvas.width - canvas.width/20,canvas.width - canvas.width/20,canvas.width - canvas.width/20,canvas.width - canvas.width/20,canvas.width - canvas.width/20,canvas.width - canvas.width/20,canvas.width - canvas.width/20];
+	wallPositionY = [canvas.width/20,2*canvas.width/20,3*canvas.width/20,4*canvas.width/20,5*canvas.width/20,6*canvas.width/20,7*canvas.width/20];
+	wallVelocityX = [0,0,0,0,0,0,0];
+	wallVelocityY = [0,0,0,0,0,0,0];
+	wallAccelerationX = [0,0,0,0,0,0,0];
+	wallAccelerationY = [0,0,0,0,0,0,0];
+	
+	
+	// Add Base and Player
 	body.beginPath();	
 	body.drawImage(level,0,0,canvas.width,canvas.height);
 	body.drawImage(otherAssets[0],playerPositionX[0],playerPositionY[0],canvas.width/20,canvas.width/20);	
-	body.drawImage(otherAssets[1],playerPositionX[1],playerPositionY[1],canvas.width/20,canvas.width/20);	
-
-
+	body.drawImage(otherAssets[1],playerPositionX[1],playerPositionY[1],canvas.width/20,canvas.width/20);
+	
+	
+	// Add Enemies
 	for(loop = 0; loop < enemyType.length; loop+=1) {
 		body.beginPath();
 		body.drawImage(otherAssets[enemyType[loop]],enemyPositionX[loop],enemyPositionY[loop],canvas.width/20,canvas.width/20);
+	}
+	
+	
+	// Add Walls
+	for(loop = 0; loop < wallType.length; loop+=1) {
+		body.beginPath();
+		body.drawImage(wallAssets[wallType[loop]],wallPositionX[loop],wallPositionY[loop],canvas.width/20,canvas.width/20);
 	}
 	
 	
@@ -89,12 +123,15 @@ window.onload = function() {
 	window.setInterval(render,renderTime);
 	render();
 	
+	
 }
 
 
 function render() {
 	
+	
 	window.ondevicemotion = function(deviceMotionEvent) {
+		
 		
 		if (playerAccelerationX/playerAccelerationX == deviceMotionEvent.accelerationIncludingGravity/deviceMotionEvent.accelerationIncludingGravity) {
 			playerAccelerationX = (1/40)*deviceMotionEvent.accelerationIncludingGravity.y;
@@ -102,6 +139,7 @@ function render() {
 		else {
 			playerAccelerationX = (1/80)*deviceMotionEvent.accelerationIncludingGravity.y;
 		}
+	
 	
 		if (playerAccelerationY/playerAccelerationY == deviceMotionEvent.accelerationIncludingGravity/deviceMotionEvent.accelerationIncludingGravity) {
 			playerAccelerationY = (1/40)*deviceMotionEvent.accelerationIncludingGravity.x;
@@ -134,6 +172,22 @@ function render() {
 			
 		}
 		
+		
+		for(loop = 0; loop < wallType.length; loop+=1) {
+			
+			if (wallType[loop] == 2) {
+			
+				if (wallAccelerationX[loop]/wallAccelerationX[loop] == deviceMotionEvent.accelerationIncludingGravity/deviceMotionEvent.accelerationIncludingGravity) {
+					wallAccelerationX[loop] = (1/50)*deviceMotionEvent.accelerationIncludingGravity.y;
+				}
+				else {
+					wallAccelerationX[loop] = (1/100)*deviceMotionEvent.accelerationIncludingGravity.y;
+				}
+			
+			}
+			
+		}
+		
 	}
 	
 	
@@ -144,6 +198,7 @@ function render() {
 	
 	
 	for(loop = 0; loop < enemyType.length; loop+=1) {
+		
 		
 		if (enemyType[loop] == 2 || enemyType[loop] == 3) {
 			
@@ -201,6 +256,50 @@ function render() {
 			
 		}
 		
+		
+		if (wallType[loop] >= 0 && wallType[loop] <= 6) {
+			
+			
+			wallVelocityX[loop] = wallVelocityX[loop] + wallAccelerationX[loop];
+			wallVelocityY[loop] = wallVelocityY[loop] + wallAccelerationY[loop];
+			wallPositionX[loop] = wallPositionX[loop] + (1/5)*wallVelocityX[loop];
+			wallPositionY[loop] = wallPositionY[loop] + (1/5)*wallVelocityY[loop];
+		
+		
+			if ( (playerPositionX[1] <= wallPositionX[loop] + canvas.width/20 && playerPositionX[1] >= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] <= wallPositionY[loop] + canvas.width/20 && playerPositionY[1] >= wallPositionY[loop] - canvas.width/20) ) {
+				alert ("You hit a wall");
+				playerPositionX[1] = playerPositionX[1] - (1/4)*playerVelocityX;
+				playerPositionY[1] = playerPositionY[1] - (1/4)*playerVelocityY;
+				playerVelocityX = (-1/4)*playerVelocityX;
+				playerVelocityY = (-1/4)*playerVelocityY;
+			}
+		
+		
+			if (wallPositionX[loop] >  canvas.width - (1/20)*canvas.width) {
+				wallPositionX[loop] =  canvas.width - (1/20)*canvas.width;
+				wallVelocityX[loop] =  (-1/2)*wallVelocityX[loop];
+				wallVelocityY[loop] =  (-1/2)*wallVelocityY[loop];
+			}
+			else if (wallPositionX[loop] < 0) {
+				wallPositionX[loop] =  0;
+				wallVelocityX[loop] =  (-1/2)*wallVelocityX[loop];
+				wallVelocityY[loop] =  (-1/2)*wallVelocityY[loop];
+			}
+	
+	
+			if (wallPositionY[loop] >  canvas.height - (1/10)*canvas.height) {
+				wallPositionY[loop] =  canvas.height - (1/10)*canvas.height;
+				wallVelocityX[loop] =  (-1/2)*wallVelocityX[loop];
+				wallVelocityY[loop] =  (-1/2)*wallVelocityY[loop];
+			}
+			else if (wallPositionY[loop] < 0) {
+				wallPositionY[loop] =  0;
+				wallVelocityX[loop] =  (-1/2)*wallVelocityX[loop];
+				wallVelocityY[loop] =  (-1/2)*wallVelocityY[loop];
+			}
+			
+		}
+		
 	}	
 	
 	
@@ -241,6 +340,7 @@ function render() {
 	body.drawImage(otherAssets[0],playerPositionX[0],playerPositionY[0],canvas.width/20,canvas.width/20);
 	body.drawImage(otherAssets[1],playerPositionX[1],playerPositionY[1],canvas.width/20,canvas.width/20);
 		
+		
 	for(loop = 0; loop < enemyType.length; loop+=1) {
 		
 		if (enemyType[loop] == 2 || enemyType[loop] == 3) {
@@ -250,6 +350,18 @@ function render() {
 			
 		}
 	
+	}
+	
+	
+	for(loop = 0; loop < wallType.length; loop+=1) {
+		
+		if (wallType[loop] >= 0 && wallType[loop] <= 6) {
+			
+			body.beginPath();
+			body.drawImage(wallAssets[wallType[loop]],wallPositionX[loop],wallPositionY[loop],canvas.width/20,canvas.width/20);
+		
+		}
+		
 	}
 	
 }
