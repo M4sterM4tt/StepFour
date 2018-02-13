@@ -191,7 +191,7 @@ function render() {
 			if (wallType[loop] == 5) {
 			
 				if (wallAccelerationX[loop]/wallAccelerationX[loop] != deviceMotionEvent.accelerationIncludingGravity/deviceMotionEvent.accelerationIncludingGravity) {
-					wallType[loop] == 7;
+					wallType[loop] = 7;
 					breaker = 1;	
 				}
 				else {
@@ -199,7 +199,7 @@ function render() {
 				}
 				
 				if (wallAccelerationX[loop]/wallAccelerationX[loop] != deviceMotionEvent.accelerationIncludingGravity/deviceMotionEvent.accelerationIncludingGravity) {
-					wallType[loop] == 7;
+					wallType[loop] = 7;
 					breaker = 1;
 				}
 				else {
@@ -212,10 +212,10 @@ function render() {
 			if (wallType[loop] == 7) {
 			
 				if (wallAccelerationX[loop]/wallAccelerationX[loop] != deviceMotionEvent.accelerationIncludingGravity/deviceMotionEvent.accelerationIncludingGravity && breaker == 0) {
-					wallType[loop] == 5;
+					wallType[loop] = 5;
 				}
 				if (wallAccelerationX[loop]/wallAccelerationX[loop] != deviceMotionEvent.accelerationIncludingGravity/deviceMotionEvent.accelerationIncludingGravity && breaker == 0) {
-					wallType[loop] == 5;
+					wallType[loop] = 5;
 				}
 			
 			}
