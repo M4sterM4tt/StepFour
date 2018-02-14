@@ -135,13 +135,13 @@ function render() {
 		
 		
 		// Player Acceleration
-		if ( playerAccelerationX/(Math.abs(playerAccelerationX)) == deviceMotionEvent.accelerationIncludingGravity/(Math.abs(deviceMotionEvent.accelerationIncludingGravity)) ) {
+		if ( playerAccelerationX/(Math.abs(playerAccelerationX)) == deviceMotionEvent.accelerationIncludingGravity.y/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.y)) ) {
 			playerAccelerationX = (1/40)*deviceMotionEvent.accelerationIncludingGravity.y;
 		}
 		else {
 			playerAccelerationX = (1/80)*deviceMotionEvent.accelerationIncludingGravity.y;
 		}
-		if ( playerAccelerationY/(Math.abs(playerAccelerationY)) == deviceMotionEvent.accelerationIncludingGravity/(Math.abs(deviceMotionEvent.accelerationIncludingGravity)) ) {
+		if ( playerAccelerationY/(Math.abs(playerAccelerationY)) == deviceMotionEvent.accelerationIncludingGravity.x/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.x)) ) {
 			playerAccelerationY = (1/40)*deviceMotionEvent.accelerationIncludingGravity.x;
 		}
 		else {
@@ -154,7 +154,7 @@ function render() {
 			
 			if (enemyType[loop] == 3) {
 			
-				if ( enemyAccelerationX[loop]/(Math.abs(enemyAccelerationX[loop])) == deviceMotionEvent.accelerationIncludingGravity/(Math.abs(deviceMotionEvent.accelerationIncludingGravity)) ) {
+				if ( enemyAccelerationX[loop]/(Math.abs(enemyAccelerationX[loop])) == deviceMotionEvent.accelerationIncludingGravity.y/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.y)) ) {
 					enemyAccelerationX[loop] = (1/40)*deviceMotionEvent.accelerationIncludingGravity.y;
 				}
 				else {
@@ -162,7 +162,7 @@ function render() {
 				}
 	
 	
-				if ( enemyAccelerationY[loop]/(Math.abs(enemyAccelerationY[loop])) == deviceMotionEvent.accelerationIncludingGravity/(Math.abs(deviceMotionEvent.accelerationIncludingGravity)) ) {
+				if ( enemyAccelerationY[loop]/(Math.abs(enemyAccelerationY[loop])) == deviceMotionEvent.accelerationIncludingGravity.x/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.x)) ) {
 					enemyAccelerationY[loop] = (1/40)*deviceMotionEvent.accelerationIncludingGravity.x;
 				}
 				else {
@@ -179,7 +179,7 @@ function render() {
 			
 			if (wallType[loop] == 2) {
 			
-				if ( wallAccelerationX[loop]/(Math.abs(wallAccelerationX[loop])) == deviceMotionEvent.accelerationIncludingGravity/(Math.abs(deviceMotionEvent.accelerationIncludingGravity)) ) {
+				if ( wallAccelerationX[loop]/(Math.abs(wallAccelerationX[loop])) == deviceMotionEvent.accelerationIncludingGravity.y/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.y)) ) {
 					wallAccelerationX[loop] = (1/40)*deviceMotionEvent.accelerationIncludingGravity.y;
 				}
 				else {
@@ -191,7 +191,7 @@ function render() {
 	
 			if (wallType[loop] == 5) {
 			
-				if ((deviceMotionEvent.accelerationIncludingGravity)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity)) != 1) {
+				if ((deviceMotionEvent.accelerationIncludingGravity.x)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.x)) != 1) {
 					wallType[loop] = 7;	
 					
 				}			
@@ -201,7 +201,7 @@ function render() {
 			
 			if (wallType[loop] == 7) {
 				
-				if (deviceMotionEvent.accelerationIncludingGravity/(Math.abs(deviceMotionEvent.accelerationIncludingGravity)) == 1) {
+				if (deviceMotionEvent.accelerationIncludingGravity.x/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.x)) == 1) {
 					wallType[loop] = 5;
 					
 				}
@@ -350,14 +350,6 @@ function render() {
 			wallPositionY[loop] = wallPositionY[loop] + (1/5)*wallVelocityY[loop];
 		
 		
-			if ( (playerPositionX[1] <= wallPositionX[loop] + canvas.width/20 && playerPositionX[1] >= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] <= wallPositionY[loop] + canvas.width/20 && playerPositionY[1] >= wallPositionY[loop] - canvas.width/20) ) {
-				playerPositionX[1] = playerPositionX[1] - (1/4)*playerVelocityX;
-				playerPositionY[1] = playerPositionY[1] - (1/4)*playerVelocityY;
-				playerVelocityX = (-1/4)*playerVelocityX;
-				playerVelocityY = (-1/4)*playerVelocityY;
-			}
-		
-		
 			if (wallPositionX[loop] >  canvas.width - (1/20)*canvas.width) {
 				wallPositionX[loop] =  canvas.width - (1/20)*canvas.width;
 				wallVelocityX[loop] =  (-1/2)*wallVelocityX[loop];
@@ -368,8 +360,6 @@ function render() {
 				wallVelocityX[loop] =  (-1/2)*wallVelocityX[loop];
 				wallVelocityY[loop] =  (-1/2)*wallVelocityY[loop];
 			}
-	
-	
 			if (wallPositionY[loop] >  canvas.height - (1/10)*canvas.height) {
 				wallPositionY[loop] =  canvas.height - (1/10)*canvas.height;
 				wallVelocityX[loop] =  (-1/2)*wallVelocityX[loop];
@@ -383,14 +373,14 @@ function render() {
 			
 			
 			// IF player hits Wall.			
-			if ( (playerPositionX[1] < wallPositionX[loop] + canvas.width/20 && playerPositionX[1] > wallPositionX[loop] - canvas.width/20) && (playerPositionX[1] < wallPositionY[loop] + canvas.width/20 && playerPositionX[1] > wallPositionY[loop] - canvas.width/20) ) {	
+			if ( (playerPositionX[1] < wallPositionX[loop] + canvas.width/20 && playerPositionX[1] > wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] < wallPositionY[loop] + canvas.width/20 && playerPositionY[1] > wallPositionY[loop] - canvas.width/20) ) {	
 				
 				playerPositionX[1] = playerPositionX[1] - (1/2)*playerVelocityX;
-				playerPositionX[1] = playerPositionX[1] - (1/2)*playerVelocityY;
+				playerPositionY[1] = playerPositionY[1] - (1/2)*playerVelocityY;
 				playerVelocityX = (-1/2)*playerVelocityX;
 				playerVelocityY = (-1/2)*playerVelocityY;	
-				wallPositionX[loop] = wallPositionX[loop] - (1/4)*wallVelocityX[loop];
-				wallPositionY[loop] = wallPositionY[loop] - (1/4)*wallVelocityY[loop];
+				wallPositionX[loop] = wallPositionX[loop] - (1/2)*wallVelocityX[loop];
+				wallPositionY[loop] = wallPositionY[loop] - (1/2)*wallVelocityY[loop];
 				wallVelocityX[loop] = (-1/4)*wallVelocityX[loop];
 				wallVelocityY[loop] = (-1/4)*wallVelocityY[loop];
 				
