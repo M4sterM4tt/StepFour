@@ -213,7 +213,7 @@ function render() {
 				}
 				else {
 					
-					limit = limit - 0.02;
+					limit = limit - 0.1;
 					if ( limit < 0) {
 						wallType[loop] = 4;
 						limit = 0;
