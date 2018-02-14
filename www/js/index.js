@@ -38,6 +38,7 @@ var enemyAccelerationY;
 
 // Wall Variables
 var wallType;
+var wallDefaultType;
 var wallPositionX;
 var wallPositionY;
 var wallVelocityX;
@@ -51,7 +52,7 @@ var renderTime;
 var loop;
 var loopTwo;
 var breaker;
-
+var limit;
 
 window.onload = function() {
 	
@@ -90,12 +91,14 @@ window.onload = function() {
 	
 	// Wall Variables
 	wallType = [0,1,2,3,4,5,6];
+	wallDefaultType = [0,1,2,3,4,5,6];
 	wallPositionX = [canvas.width - canvas.width/20,canvas.width - canvas.width/20,canvas.width - canvas.width/20,canvas.width - canvas.width/20,canvas.width - canvas.width/20,canvas.width - canvas.width/20,canvas.width - canvas.width/20];
 	wallPositionY = [canvas.width/20,2*canvas.width/20,3*canvas.width/20,4*canvas.width/20,5*canvas.width/20,6*canvas.width/20,7*canvas.width/20];
 	wallVelocityX = [0,0,0,0,0,0,0];
 	wallVelocityY = [0,0,0,0,0,0,0];
 	wallAccelerationX = [0,0,0,0,0,0,0];
 	wallAccelerationY = [0,0,0,0,0,0,0];
+	limit = 0;
 	
 	
 	// Add Base and Player
@@ -177,9 +180,9 @@ function render() {
 		// Wall Acceleration
 		for(loop = 0; loop < wallType.length; loop+=1) {
 					
-			if (wallType[loop] == 1) {
+			if (wallDefaultType[loop] == 1) {
 			
-				if ((deviceMotionEvent.accelerationIncludingGravity.z)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) != 1) {
+				if ( wallAccelerationX[loop]/(Math.abs(wallAccelerationX[loop])) == deviceMotionEvent.accelerationIncludingGravity.z/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) ) {
 					wallAccelerationX[loop] = (1/40)*deviceMotionEvent.accelerationIncludingGravity.z;
 				}
 				else {
@@ -189,7 +192,7 @@ function render() {
 			}
 			
 			
-			if (wallType[loop] == 2) {
+			if (wallDefaultType[loop] == 2) {
 			
 				if ( wallAccelerationX[loop]/(Math.abs(wallAccelerationX[loop])) == deviceMotionEvent.accelerationIncludingGravity.y/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.y)) ) {
 					wallAccelerationX[loop] = (1/40)*deviceMotionEvent.accelerationIncludingGravity.y;
@@ -201,19 +204,27 @@ function render() {
 			}
 			
 			
-			if (wallType[loop] == 4) {
+			if (wallDefaultType[loop] == 4) {
 			
-				if ((deviceMotionEvent.accelerationIncludingGravity.z)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) != 1) {
+				if ((deviceMotionEvent.accelerationIncludingGravity.z)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) < 7 || deviceMotionEvent.accelerationIncludingGravity.z/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) > 11) {
+					
 					wallType[loop] = 7;
+					limit = 1;
 				}
 				else {
-					wallType[loop] = 4;
+					
+					limit = limit - 0.02;
+					if ( limit < 0) {
+						wallType[loop] = 4;
+						limit = 0;
+					}
+					
 				}
 			
 			}
 			
 	
-			if (wallType[loop] == 5) {
+			if (wallDefaultType[loop] == 5) {
 			
 				if ((deviceMotionEvent.accelerationIncludingGravity.x)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.x)) != 1) {
 					wallType[loop] = 7;	
