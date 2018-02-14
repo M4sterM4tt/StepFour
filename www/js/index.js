@@ -183,10 +183,10 @@ function render() {
 			if (wallDefaultType[loop] == 1) {
 			
 				if ( wallAccelerationX[loop]/(Math.abs(wallAccelerationX[loop])) == deviceMotionEvent.accelerationIncludingGravity.z/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) ) {
-					wallAccelerationX[loop] = (1/40)*deviceMotionEvent.accelerationIncludingGravity.z;
+					wallAccelerationX[loop] = (1/40)*(deviceMotionEvent.accelerationIncludingGravity.z - 7);
 				}
 				else {
-					wallAccelerationX[loop] = (1/80)*deviceMotionEvent.accelerationIncludingGravity.z;
+					wallAccelerationX[loop] = (1/80)*(deviceMotionEvent.accelerationIncludingGravity.z - 7);
 				}
 			
 			}
