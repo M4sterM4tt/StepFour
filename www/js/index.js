@@ -176,6 +176,18 @@ function render() {
 		
 		// Wall Acceleration
 		for(loop = 0; loop < wallType.length; loop+=1) {
+					
+			if (wallType[loop] == 1) {
+			
+				if ((deviceMotionEvent.accelerationIncludingGravity.z)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) != 1) {
+					wallAccelerationX[loop] = (1/40)*deviceMotionEvent.accelerationIncludingGravity.z;
+				}
+				else {
+					wallAccelerationX[loop] = (1/80)*deviceMotionEvent.accelerationIncludingGravity.z;
+				}
+			
+			}
+			
 			
 			if (wallType[loop] == 2) {
 			
@@ -188,22 +200,27 @@ function render() {
 			
 			}
 			
+			
+			if (wallType[loop] == 4) {
+			
+				if ((deviceMotionEvent.accelerationIncludingGravity.z)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) != 1) {
+					wallType[loop] = 7;
+				}
+				else {
+					wallType[loop] = 4;
+				}
+			
+			}
+			
 	
 			if (wallType[loop] == 5) {
 			
 				if ((deviceMotionEvent.accelerationIncludingGravity.x)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.x)) != 1) {
 					wallType[loop] = 7;	
 					
-				}			
-			
-			}
-			
-			
-			if (wallType[loop] == 7) {
-				
-				if (deviceMotionEvent.accelerationIncludingGravity.x/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.x)) == 1) {
+				}
+				else {
 					wallType[loop] = 5;
-					
 				}
 			
 			}
@@ -301,7 +318,7 @@ function render() {
 			// IF Enemy hits Wall.
 			for(loopTwo = 0; loopTwo < wallType.length; loopTwo+=1) {
 				
-				if ( (enemyPositionX[loop] < wallPositionX[loopTwo] + canvas.width/20 && enemyPositionX[loop] > wallPositionX[loopTwo] - canvas.width/20) && (enemyPositionY[loop] < wallPositionY[loopTwo] + canvas.width/20 && enemyPositionY[loop] > wallPositionY[loopTwo] - canvas.width/20) ) {
+				if ( (enemyPositionX[loop] < wallPositionX[loopTwo] + canvas.width/20 && enemyPositionX[loop] > wallPositionX[loopTwo] - canvas.width/20) && (enemyPositionY[loop] < wallPositionY[loopTwo] + canvas.width/20 && enemyPositionY[loop] > wallPositionY[loopTwo] - canvas.width/20) && wallType[loopTwo] >= 0 && wallType[loopTwo] <= 6 ) {
 					
 					enemyPositionX[loop] = enemyPositionX[loop] - (1/2)*enemyVelocityX[loop];
 					enemyPositionY[loop] = enemyPositionY[loop] - (1/2)*enemyVelocityY[loop];
