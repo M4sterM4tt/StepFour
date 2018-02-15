@@ -51,8 +51,14 @@ var wallAccelerationY;
 var renderTime;
 var loop;
 var loopTwo;
-var breaker;
+var loopThree;
+var PointX;
+var PointY;
 var limit;
+var breaker;
+
+
+
 
 window.onload = function() {
 	
@@ -99,6 +105,7 @@ window.onload = function() {
 	wallAccelerationX = [0,0,0,0,0,0,0];
 	wallAccelerationY = [0,0,0,0,0,0,0];
 	limit = 0;
+	breaker = 0;
 	
 	
 	// Add Base and Player
@@ -129,6 +136,8 @@ window.onload = function() {
 	
 	
 }
+
+
 
 
 function render() {
@@ -204,6 +213,19 @@ function render() {
 			}
 			
 			
+			if (wallDefaultType[loop] == 3 && breaker == 0) {
+				alert("hi");
+				if (PointX < wallPositionX[loop] + canvas.width/20 && PointX > wallPositionX[loop] - canvas.width/20 && PointY < wallPositionY[loop] + canvas.width/20 && PointY > wallPositionY[loop] - canvas.width/20) {
+					
+					wallPositionX[loop] = PointX;
+				
+				}
+			
+			}
+	
+			
+			
+			
 			if (wallDefaultType[loop] == 4) {
 			
 				if ((Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) < 8 || (Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) > 10) {
@@ -213,7 +235,7 @@ function render() {
 				}
 				else {
 					
-					limit = limit - 0.1;
+					limit = limit - 0.01;
 					if ( limit < 0) {
 						wallType[loop] = 4;
 						limit = 0;
@@ -453,3 +475,39 @@ function render() {
 	}
 	
 }
+
+
+
+
+function wallArrowTouchOn(event) {
+	breaker = 0;	
+}
+function wallArrowTouchMove(event) {
+	PointX = event.offsetX;
+	PointY = event.offsetY;
+}
+function wallArrowTouchOff(event) {	
+	breaker = 1;
+}
+
+
+
+
+function wallCloudTouch(event) {
+	
+	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {
+					
+		if (wallDefaultType[loopThree] == 6) {
+			
+			if (event.offsetX < wallPositionX[loopThree] + canvas.width/20 && event.offsetX > wallPositionX[loopThree] && event.offsetY < wallPositionY[loopThree] + canvas.width/20 && event.offsetY > wallPositionY[loopThree]) {
+				
+				wallType[loopThree] = 7;
+				
+			}
+			
+		}
+	
+	}
+		
+}
+
