@@ -4,7 +4,7 @@
 // NEED TO REFRENCE THIS https://developer.mozilla.org/en-US/docs/Web/API/Detecting_device_orientation
 // NEED TO REFRENCE THIS https://mobiforge.com/design-development/html5-mobile-web-canvas
 // NEED TO REFRENCE THIS https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Managing_screen_orientation
-
+// NEED TO REFRENCE THIS https://www.w3schools.com/tags/ref_eventattributes.asp
 
 // Canvas Variables 
 var canvas; 

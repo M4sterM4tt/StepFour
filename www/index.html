@@ -12,7 +12,7 @@
 	
 		<meta name = "viewport" content = "width = device-width, initial-scale = 1.0"><!-- Sets the width of the page to follow the screen width of the device -->
 		
-		<canvas id="canvas" onmousedown="wallArrowTouchOn(event);" onmousemove="wallArrowTouchMove(event);" onmouseup="wallArrowTouchOff(event);" onclick="wallCloudTouch(event);">
+		<canvas id="canvas" onmousedown="wallArrowTouchOn(event);" ondrag="wallArrowTouchMove(event);" onmouseup="wallArrowTouchOff(event);" onclick="wallCloudTouch(event);">
 			
 			<img id="levelBase" src="assets\level_Base.png" alt="level_Base">
 			<img id="playerGoal" src="assets\player_Goal.png" alt="player_Goal" width="100" height="100">
