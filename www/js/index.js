@@ -217,9 +217,13 @@ function render() {
 				for(loopTwo = 0; loopTwo < enemyType.length; loopTwo+=1) {
 					if (Math.abs(wallAccelerationZ[loop] - deviceMotionEvent.accelerationIncludingGravity.z) < 3) {
 						wallType[loop] = 7;
+						limit = 1;
 					}
 					else if (((playerPositionX[1] >= wallPositionX[loop] + canvas.width/20 || playerPositionX[1] <= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] >= wallPositionY[loop] + canvas.width/20 || playerPositionY[1] <= wallPositionY[loop] - canvas.width/20)) && ((enemyPositionX[loopTwo] >= wallPositionX[loop] + canvas.width/20 || enemyPositionX[loopTwo] <= wallPositionX[loop] - canvas.width/20) && (enemyPositionY[loopTwo] >= wallPositionY[loop] + canvas.width/20 || enemyPositionY[loopTwo] <= wallPositionY[loop] - canvas.width/20))) {
-						wallType[loop] = 4;
+						limit = limit - 0.01;
+						if (limit < 0) {
+							wallType[loop] = 4;
+						}
 					}	
 				}
 			}
