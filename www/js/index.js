@@ -206,7 +206,7 @@ function render() {
 			
 			if (wallDefaultType[loop] == 4) {
 			
-				if ((deviceMotionEvent.accelerationIncludingGravity.z)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) < 7 || deviceMotionEvent.accelerationIncludingGravity.z/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) > 11) {
+				if ((Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) < 8 || (Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) > 10) {
 					
 					wallType[loop] = 7;
 					limit = 1;
