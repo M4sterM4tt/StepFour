@@ -221,7 +221,7 @@ function render() {
 					}
 					else if (((playerPositionX[1] >= wallPositionX[loop] + canvas.width/20 || playerPositionX[1] <= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] >= wallPositionY[loop] + canvas.width/20 || playerPositionY[1] <= wallPositionY[loop] - canvas.width/20)) && ((enemyPositionX[loopTwo] >= wallPositionX[loop] + canvas.width/20 || enemyPositionX[loopTwo] <= wallPositionX[loop] - canvas.width/20) && (enemyPositionY[loopTwo] >= wallPositionY[loop] + canvas.width/20 || enemyPositionY[loopTwo] <= wallPositionY[loop] - canvas.width/20))) {
 						limit = limit - 0.01;
-						if ( limit < 0) {
+						if (limit < 0) {
 							wallType[loop] = 4;
 							limit = 0;
 						}	
@@ -326,9 +326,11 @@ function render() {
 			// IF Enemy hits Player/Goal.
 			for(loopTwo = 0; loopTwo < playerPositionX.length; loopTwo+=1) {
 				if ( (playerPositionX[loopTwo] < enemyPositionX[loop] + canvas.width/30 && playerPositionX[loopTwo] > enemyPositionX[loop] - canvas.width/30) && (playerPositionY[loopTwo] < enemyPositionY[loop] + canvas.width/30 && playerPositionY[loopTwo] > enemyPositionY[loop] - canvas.width/30) ) {
-					alert ("You are Dead");
 					enemyPositionX[loop] = canvas.width - enemyPositionX[loop];
-					enemyPositionY[loop] = canvas.height - enemyPositionY[loop];				
+					enemyPositionY[loop] = canvas.height - enemyPositionY[loop];	
+					if (loopTwo == 1) {
+						alert ("You are Dead");
+					}
 				}
 			}
 			
