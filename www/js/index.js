@@ -215,12 +215,12 @@ function render() {
 			// wallCloudShake
 			if (wallDefaultType[loop] == 4) {
 				for(loopTwo = 0; loopTwo < enemyType.length; loopTwo+=1) {
-					if (Math.abs(wallAccelerationZ[loop] - deviceMotionEvent.accelerationIncludingGravity.z) > 3) { 	
+					if (Math.abs(wallAccelerationZ[loop] - deviceMotionEvent.accelerationIncludingGravity.z) > 3) {
 						wallType[loop] = 7;
 						limit = 1;
 					}
 					else if (((playerPositionX[1] >= wallPositionX[loop] + canvas.width/20 || playerPositionX[1] <= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] >= wallPositionY[loop] + canvas.width/20 || playerPositionY[1] <= wallPositionY[loop] - canvas.width/20)) && ((enemyPositionX[loopTwo] >= wallPositionX[loop] + canvas.width/20 || enemyPositionX[loopTwo] <= wallPositionX[loop] - canvas.width/20) && (enemyPositionY[loopTwo] >= wallPositionY[loop] + canvas.width/20 || enemyPositionY[loopTwo] <= wallPositionY[loop] - canvas.width/20))) {
-						limit = limit - 0.01;
+						limit = limit - 0.05;
 						if (limit < 0) {
 							wallType[loop] = 4;
 							limit = 0;
@@ -449,14 +449,14 @@ function render() {
 
 // wallArrowTouch Functions
 function wallArrowTouchOn(event) {
-	breaker = 0	
+	breaker = 0;	
 }
 function wallArrowTouchMove(event) {
 	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {	
 
 		// wallArrowTouch
 		if (wallDefaultType[loopThree] == 3 && breaker == 0) {
-			if (event.offsetX < wallPositionX[loopThree] + canvas.width/20 && event.offsetX > wallPositionX[loopThree] - canvas.width/30 && event.offsetY < wallPositionY[loopThree] + canvas.width/20 && event.offsetY > wallPositionY[loopThree]) {	
+			if (event.offsetX < wallPositionX[loopThree] + 3*canvas.width/20 && event.offsetX > wallPositionX[loopThree] - canvas.width/30 && event.offsetY < wallPositionY[loopThree] + canvas.width/20 && event.offsetY > wallPositionY[loopThree]) {	
 				wallPositionX[loopThree] = event.offsetX;	
 			}
 			
