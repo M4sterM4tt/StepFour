@@ -215,7 +215,7 @@ function render() {
 					wallType[loop] = 7;
 					limit = 1;
 				}
-				else if ((playerPositionX[1] >= wallPositionX[loop] + canvas.width/20 && playerPositionX[1] <= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] >= wallPositionY[loop] + canvas.width/20 && playerPositionY[1] <= wallPositionY[loop] - canvas.width/20)) {
+				else if ((playerPositionX[1] >= wallPositionX[loop] + canvas.width/20 || playerPositionX[1] <= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] >= wallPositionY[loop] + canvas.width/20 || playerPositionY[1] <= wallPositionY[loop] - canvas.width/20)) {
 					limit = limit - 0.01;
 					if ( limit < 0) {
 						wallType[loop] = 4;
@@ -230,7 +230,7 @@ function render() {
 				if ((deviceMotionEvent.accelerationIncludingGravity.x)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.x)) != 1) {
 					wallType[loop] = 7;
 				}
-				else if ((playerPositionX[1] >= wallPositionX[loop] + canvas.width/20 && playerPositionX[1] <= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] >= wallPositionY[loop] + canvas.width/20 && playerPositionY[1] <= wallPositionY[loop] - canvas.width/20)) {
+				else if ((playerPositionX[1] >= wallPositionX[loop] + canvas.width/20 || playerPositionX[1] <= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] >= wallPositionY[loop] + canvas.width/20 || playerPositionY[1] <= wallPositionY[loop] - canvas.width/20)) {
 					wallType[loop] = 5;
 				}
 			}
