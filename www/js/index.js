@@ -45,6 +45,7 @@ var wallVelocityX;
 var wallVelocityY;
 var wallAccelerationX;
 var wallAccelerationY;
+var wallAccelerationZ;
 
 
 // Other Variables
@@ -103,6 +104,7 @@ window.onload = function() {
 	wallVelocityY = [0,0,0,0,0,0,0];
 	wallAccelerationX = [0,0,0,0,0,0,0];
 	wallAccelerationY = [0,0,0,0,0,0,0];
+	wallAccelerationZ = [0,0,0,0,0,0,0];
 	limit = 0;
 	breaker = 1;
 	
@@ -189,12 +191,13 @@ function render() {
 		
 			// wallArrowShake
 			if (wallDefaultType[loop] == 1) {
-				if ( wallAccelerationX[loop]/(Math.abs(wallAccelerationX[loop])) == deviceMotionEvent.accelerationIncludingGravity.z/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) ) {
-					wallAccelerationX[loop] = (1/40)*(deviceMotionEvent.accelerationIncludingGravity.z - 8);
+				if ( Math.abs(wallAccelerationZ[loop] - deviceMotionEvent.accelerationIncludingGravity.z) > 3) {
+					wallAccelerationX[loop] = -(1/10)*Math.abs(wallAccelerationZ[loop] + deviceMotionEvent.accelerationIncludingGravity.z);
 				}
 				else {
-					wallAccelerationX[loop] = (1/80)*(deviceMotionEvent.accelerationIncludingGravity.z - 8);
+					wallAccelerationX[loop] = wallAccelerationX[loop] + 1;
 				}
+				wallAccelerationZ[loop] = deviceMotionEvent.accelerationIncludingGravity.z;
 			}
 			
 			
@@ -211,7 +214,7 @@ function render() {
 			
 			// wallCloudShake
 			if (wallDefaultType[loop] == 4) {
-				if (((Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) < 8 || (Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) > 10)) { 	
+				if (((Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) < 7 || (Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) > 11)) { 	
 					wallType[loop] = 7;
 					limit = 1;
 				}
