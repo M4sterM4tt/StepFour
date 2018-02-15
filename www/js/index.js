@@ -214,7 +214,7 @@ function render() {
 			
 			
 			if (wallDefaultType[loop] == 3 && breaker == 0) {
-				alert("hi");
+				
 				if (PointX < wallPositionX[loop] + canvas.width/20 && PointX > wallPositionX[loop] - canvas.width/20 && PointY < wallPositionY[loop] + canvas.width/20 && PointY > wallPositionY[loop] - canvas.width/20) {
 					
 					wallPositionX[loop] = PointX;
