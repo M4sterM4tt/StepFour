@@ -455,7 +455,7 @@ function wallArrowTouchMove(event) {
 
 		// wallArrowTouch
 		if (wallDefaultType[loopThree] == 3 && breaker == 0) {
-			if (event.offsetX < wallPositionX[loopThree] + canvas.width/20 && event.offsetX > wallPositionX[loopThree] - canvas.width/30 && event.offsetY < wallPositionY[loopThree] + canvas.width/20 && event.offsetY > wallPositionY[loopThree]  - canvas.width/20) {	
+			if (event.offsetX < wallPositionX[loopThree] + 2*canvas.width/20 && event.offsetX > wallPositionX[loopThree] - 2*canvas.width/30 && event.offsetY < wallPositionY[loopThree] + 2*canvas.width/20 && event.offsetY > wallPositionY[loopThree]  - 2*canvas.width/20) {	
 				wallPositionX[loopThree] = event.offsetX;	
 			}
 			
