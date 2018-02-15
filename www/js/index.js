@@ -192,10 +192,10 @@ function render() {
 			// wallArrowShake
 			if (wallDefaultType[loop] == 1) {
 				if ( Math.abs(wallAccelerationZ[loop] - deviceMotionEvent.accelerationIncludingGravity.z) > 3) {
-					wallAccelerationX[loop] = -(1/10)*Math.abs(wallAccelerationZ[loop] + deviceMotionEvent.accelerationIncludingGravity.z);
+					wallAccelerationX[loop] = -0.1;
 				}
 				else {
-					wallAccelerationX[loop] = wallAccelerationX[loop] + 1;
+					wallAccelerationX[loop] =  0.01;
 				}
 				wallAccelerationZ[loop] = deviceMotionEvent.accelerationIncludingGravity.z;
 			}
