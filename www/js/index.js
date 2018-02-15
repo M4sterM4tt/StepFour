@@ -49,13 +49,12 @@ var wallAccelerationY;
 
 // Other Variables
 var renderTime;
+var limit;
+var breaker;
 var loop;
 var loopTwo;
 var loopThree;
-var PointX;
-var PointY;
-var limit;
-var breaker;
+var loopFour;
 
 
 
@@ -139,10 +138,11 @@ window.onload = function() {
 
 
 
-
+// Main Function
 function render() {
 	
 	
+	// Motion Function
 	window.ondevicemotion = function(deviceMotionEvent) {
 		
 		
@@ -164,55 +164,52 @@ function render() {
 		// Enemy Acceleration
 		for(loop = 0; loop < enemyType.length; loop+=1) {
 			
-			if (enemyType[loop] == 3) {
 			
+			// Enemy Ball
+			if (enemyType[loop] == 3) {
 				if ( enemyAccelerationX[loop]/(Math.abs(enemyAccelerationX[loop])) == deviceMotionEvent.accelerationIncludingGravity.y/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.y)) ) {
 					enemyAccelerationX[loop] = (1/40)*deviceMotionEvent.accelerationIncludingGravity.y;
 				}
 				else {
 					enemyAccelerationX[loop] = (1/80)*deviceMotionEvent.accelerationIncludingGravity.y;
-				}
-	
-	
+				}		
 				if ( enemyAccelerationY[loop]/(Math.abs(enemyAccelerationY[loop])) == deviceMotionEvent.accelerationIncludingGravity.x/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.x)) ) {
 					enemyAccelerationY[loop] = (1/40)*deviceMotionEvent.accelerationIncludingGravity.x;
 				}
 				else {
 					enemyAccelerationY[loop] = (1/80)*deviceMotionEvent.accelerationIncludingGravity.x;
 				}
-			
-			}
-			
+			}		
 		}
 		
 		
 		// Wall Acceleration
-		for(loop = 0; loop < wallType.length; loop+=1) {
-					
+		for(loop = 0; loop < wallType.length; loop+=1) {	
+
+		
+			// wallArrowShake
 			if (wallDefaultType[loop] == 1) {
-			
 				if ( wallAccelerationX[loop]/(Math.abs(wallAccelerationX[loop])) == deviceMotionEvent.accelerationIncludingGravity.z/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) ) {
-					wallAccelerationX[loop] = (1/40)*(deviceMotionEvent.accelerationIncludingGravity.z - 9);
+					wallAccelerationX[loop] = (1/40)*(deviceMotionEvent.accelerationIncludingGravity.z - 8);
 				}
 				else {
-					wallAccelerationX[loop] = (1/80)*(deviceMotionEvent.accelerationIncludingGravity.z - 9);
+					wallAccelerationX[loop] = (1/80)*(deviceMotionEvent.accelerationIncludingGravity.z - 8);
 				}
-			
 			}
 			
 			
+			// wallArrowTilt
 			if (wallDefaultType[loop] == 2) {
-			
 				if ( wallAccelerationX[loop]/(Math.abs(wallAccelerationX[loop])) == deviceMotionEvent.accelerationIncludingGravity.y/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.y)) ) {
 					wallAccelerationX[loop] = (1/40)*deviceMotionEvent.accelerationIncludingGravity.y;
 				}
 				else {
 					wallAccelerationX[loop] = (1/80)*deviceMotionEvent.accelerationIncludingGravity.y;
 				}
-			
 			}
 		
 			
+			// wallCloudShake
 			if (wallDefaultType[loop] == 4) {
 			
 				if ((Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) < 8 || (Math.abs(deviceMotionEvent.accelerationIncludingGravity.z)) > 10) {
@@ -226,13 +223,12 @@ function render() {
 					if ( limit < 0) {
 						wallType[loop] = 4;
 						limit = 0;
-					}
-					
+					}	
 				}
-			
 			}
 			
-	
+			
+			// wallCloudTilt
 			if (wallDefaultType[loop] == 5) {
 			
 				if ((deviceMotionEvent.accelerationIncludingGravity.x)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.x)) != 1) {
@@ -242,11 +238,8 @@ function render() {
 				else {
 					wallType[loop] = 5;
 				}
-			
 			}
-			
-		}
-		
+		}	
 	}
 	
 	
@@ -305,6 +298,7 @@ function render() {
 			enemyPositionY[loop] = enemyPositionY[loop] + (1/4)*enemyVelocityY[loop];
 		
 		
+			// Check to prevent Enemy from leaving the Canvas
 			if (enemyPositionX[loop] >  canvas.width - (1/20)*canvas.width) {
 				enemyPositionX[loop] =  canvas.width - (1/20)*canvas.width;
 				enemyVelocityX[loop] =  (-1/4)*enemyVelocityX[loop];
@@ -327,19 +321,19 @@ function render() {
 			}
 			
 
-			// IF Enemy hits Player.
-			if ( (playerPositionX[1] <= enemyPositionX[loop] + canvas.width/30 && playerPositionX[1] >= enemyPositionX[loop] - canvas.width/30) && (playerPositionY[1] <= enemyPositionY[loop] + canvas.width/30 && playerPositionY[1] >= enemyPositionY[loop] - canvas.width/30) ) {
-				alert ("You are Dead");
-				enemyPositionX[loop] = canvas.width - enemyPositionX[loop];
-				enemyPositionY[loop] = canvas.height - enemyPositionY[loop];				
+			// IF Enemy hits Player/Goal.
+			for(loopTwo = 0; loopTwo < playerPositionX.length; loopTwo+=1) {
+				if ( (playerPositionX[loopTwo] <= enemyPositionX[loop] + canvas.width/30 && playerPositionX[loopTwo] >= enemyPositionX[loop] - canvas.width/30) && (playerPositionY[loopTwo] <= enemyPositionY[loop] + canvas.width/30 && playerPositionY[loopTwo] >= enemyPositionY[loop] - canvas.width/30) ) {
+					alert ("You are Dead");
+					enemyPositionX[loop] = canvas.width - enemyPositionX[loop];
+					enemyPositionY[loop] = canvas.height - enemyPositionY[loop];				
+				}
 			}
-		
-		
+			
+			
 			// IF Enemy hits Wall.
 			for(loopTwo = 0; loopTwo < wallType.length; loopTwo+=1) {
-				
 				if ( (enemyPositionX[loop] < wallPositionX[loopTwo] + canvas.width/20 && enemyPositionX[loop] > wallPositionX[loopTwo] - canvas.width/20) && (enemyPositionY[loop] < wallPositionY[loopTwo] + canvas.width/20 && enemyPositionY[loop] > wallPositionY[loopTwo] - canvas.width/20) && wallType[loopTwo] >= 0 && wallType[loopTwo] <= 6 ) {
-					
 					enemyPositionX[loop] = enemyPositionX[loop] - (1/2)*enemyVelocityX[loop];
 					enemyPositionY[loop] = enemyPositionY[loop] - (1/2)*enemyVelocityY[loop];
 					enemyVelocityX[loop] = (-1/2)*enemyVelocityX[loop];
@@ -348,45 +342,39 @@ function render() {
 					wallPositionY[loopTwo] = wallPositionY[loopTwo] - (1/4)*wallVelocityY[loopTwo];
 					wallVelocityX[loopTwo] = (-1/4)*wallVelocityX[loopTwo];
 					wallVelocityY[loopTwo] = (-1/4)*wallVelocityY[loopTwo];
-					
 				}
-				
 			}
 	
 	
 			// IF Enemy Ball hits Enemy Hole.
 			if (enemyType[loop] == 3) {
-			
 				for(loopTwo = 0; loopTwo < enemyType.length; loopTwo+=1) {
-				
 					if ( (enemyPositionX[loop] < enemyPositionX[loopTwo] + canvas.width/30 && enemyPositionX[loop] > enemyPositionX[loopTwo] - canvas.width/30) && (enemyPositionY[loop] < enemyPositionY[loopTwo] + canvas.width/30 && enemyPositionY[loop] > enemyPositionY[loopTwo] - canvas.width/30) && enemyType[loopTwo] == 2) {
-						
 						enemyType[loop] = 4;
 						alert ("Enemy Ball has been Killed");
-						
 					}
-			
 				}
-			
-			}
-			
+			}	
 		}
-	
 	}	
 	
 
 	// Wall Mechanics
 	for(loop = 0; loop < wallType.length; loop+=1) {
-	
+		
+		
+		// The wall must be alive.
 		if (wallType[loop] >= 0 && wallType[loop] <= 6) {
 			
 			
+			// Sets Wall Velocity and Position.
 			wallVelocityX[loop] = wallVelocityX[loop] + wallAccelerationX[loop];
 			wallVelocityY[loop] = wallVelocityY[loop] + wallAccelerationY[loop];
 			wallPositionX[loop] = wallPositionX[loop] + (1/5)*wallVelocityX[loop];
 			wallPositionY[loop] = wallPositionY[loop] + (1/5)*wallVelocityY[loop];
 		
 		
+			// Check to prevent Wall from leaving the Canvas
 			if (wallPositionX[loop] >  canvas.width - (1/20)*canvas.width) {
 				wallPositionX[loop] =  canvas.width - (1/20)*canvas.width;
 				wallVelocityX[loop] =  (-1/2)*wallVelocityX[loop];
@@ -409,22 +397,20 @@ function render() {
 			}
 			
 			
-			// IF player hits Wall.			
-			if ( (playerPositionX[1] < wallPositionX[loop] + canvas.width/20 && playerPositionX[1] > wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] < wallPositionY[loop] + canvas.width/20 && playerPositionY[1] > wallPositionY[loop] - canvas.width/20) ) {	
-				
-				playerPositionX[1] = playerPositionX[1] - (1/2)*playerVelocityX;
-				playerPositionY[1] = playerPositionY[1] - (1/2)*playerVelocityY;
-				playerVelocityX = (-1/2)*playerVelocityX;
-				playerVelocityY = (-1/2)*playerVelocityY;	
-				wallPositionX[loop] = wallPositionX[loop] - (1/2)*wallVelocityX[loop];
-				wallPositionY[loop] = wallPositionY[loop] - (1/2)*wallVelocityY[loop];
-				wallVelocityX[loop] = (-1/4)*wallVelocityX[loop];
-				wallVelocityY[loop] = (-1/4)*wallVelocityY[loop];
-				
+			// IF Player/Goal hits Wall.	
+			for(loopTwo = 0; loopTwo < playerPositionX.length; loopTwo+=1) {
+				if ( (playerPositionX[loopTwo] < wallPositionX[loop] + canvas.width/20 && playerPositionX[loopTwo] > wallPositionX[loop] - canvas.width/20) && (playerPositionY[loopTwo] < wallPositionY[loop] + canvas.width/20 && playerPositionY[loopTwo] > wallPositionY[loop] - canvas.width/20) ) {
+					playerPositionX[loopTwo] = playerPositionX[loopTwo] - (1/2)*playerVelocityX;
+					playerPositionY[loopTwo] = playerPositionY[loopTwo] - (1/2)*playerVelocityY;
+					playerVelocityX = (-1/2)*playerVelocityX;
+					playerVelocityY = (-1/2)*playerVelocityY;	
+					wallPositionX[loop] = wallPositionX[loop] - (1/2)*wallVelocityX[loop];
+					wallPositionY[loop] = wallPositionY[loop] - (1/2)*wallVelocityY[loop];
+					wallVelocityX[loop] = (-1/4)*wallVelocityX[loop];
+					wallVelocityY[loop] = (-1/4)*wallVelocityY[loop];
+				}
 			}
-			
-		}
-		
+		}	
 	}	
 	
 	
@@ -438,80 +424,63 @@ function render() {
 	
 	// Add Enemies	
 	for(loop = 0; loop < enemyType.length; loop+=1) {
-		
 		if (enemyType[loop] == 2 || enemyType[loop] == 3) {
-	
 			body.beginPath();
 			body.drawImage(otherAssets[enemyType[loop]],enemyPositionX[loop],enemyPositionY[loop],canvas.width/20,canvas.width/20);
-			
 		}
-	
 	}
 	
 	
 	// Add Walls
 	for(loop = 0; loop < wallType.length; loop+=1) {
-		
-		if (wallType[loop] >= 0 && wallType[loop] <= 6) {
-			
+		if (wallType[loop] >= 0 && wallType[loop] <= 6) {	
 			body.beginPath();
-			body.drawImage(wallAssets[wallType[loop]],wallPositionX[loop],wallPositionY[loop],canvas.width/20,canvas.width/20);
-		
-		}
-		
-	}
-	
+			body.drawImage(wallAssets[wallType[loop]],wallPositionX[loop],wallPositionY[loop],canvas.width/20,canvas.width/20);	
+		}		
+	}	
 }
 
 
 
 
+// wallArrowTouch Functions
 function wallArrowTouchOn(event) {
 	breaker = 0	
 }
 function wallArrowTouchMove(event) {
+	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {	
 
-	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {
-					
+		// wallArrowTouch
 		if (wallDefaultType[loopThree] == 3 && breaker == 0) {
-			
-			if (event.offsetX < wallPositionX[loopThree] + canvas.width/20 && event.offsetX > wallPositionX[loopThree] - canvas.width/30 && event.offsetY < wallPositionY[loopThree] + canvas.width/20 && event.offsetY > wallPositionY[loopThree]) {
-				
-				wallPositionX[loopThree] = event.offsetX;
-				
+			if (event.offsetX < wallPositionX[loopThree] + canvas.width/20 && event.offsetX > wallPositionX[loopThree] - canvas.width/30 && event.offsetY < wallPositionY[loopThree] + canvas.width/20 && event.offsetY > wallPositionY[loopThree]) {	
+				wallPositionX[loopThree] = event.offsetX;	
 			}
 			
 	
-			// IF player hits Wall.			
-			if ( (playerPositionX[1] < wallPositionX[loopThree] + canvas.width/20 && playerPositionX[1] > wallPositionX[loopThree] - canvas.width/20) && (playerPositionY[1] < wallPositionY[loopThree] + canvas.width/20 && playerPositionY[1] > wallPositionY[loopThree] - canvas.width/20) ) {	
-				
-				playerPositionX[1] = playerPositionX[1] - (1/2)*playerVelocityX;
-				playerPositionY[1] = playerPositionY[1] - (1/2)*playerVelocityY;
-				playerVelocityX = (-1/2)*playerVelocityX;
-				playerVelocityY = (-1/2)*playerVelocityY;	
-				wallPositionX[loopThree] = wallPositionX[loopThree] + canvas.width/20*((wallPositionX[loopThree] - playerPositionX[1])/Math.abs(wallPositionX[loopThree] - playerPositionX[1]));
-				
+			// IF Player/Goal hits Wall.		
+			for(loopFour = 0; loopFour < playerPositionX.length; loopFour+=1) {
+				if ( (playerPositionX[loopFour] < wallPositionX[loopThree] + canvas.width/20 && playerPositionX[loopFour] > wallPositionX[loopThree] - canvas.width/20) && (playerPositionY[loopFour] < wallPositionY[loopThree] + canvas.width/20 && playerPositionY[loopFour] > wallPositionY[loopThree] - canvas.width/20) ) {
+					playerPositionX[loopFour] = playerPositionX[loopFour] - (1/2)*playerVelocityX;
+					playerPositionY[loopFour] = playerPositionY[loopFour] - (1/2)*playerVelocityY;
+					playerVelocityX = (-1/2)*playerVelocityX;
+					playerVelocityY = (-1/2)*playerVelocityY;	
+					wallPositionX[loopThree] = wallPositionX[loopThree] + canvas.width/20*((wallPositionX[loopThree] - playerPositionX[loopFour])/Math.abs(wallPositionX[loopThree] - playerPositionX[loopFour]));
+				}		
 			}
 			
+			
 			// IF Enemy hits Wall.
-			for(loopFour = 0; loopFour < enemyType.length; loopFour+=1) {
-				
-				if ( (enemyPositionX[loopFour] < wallPositionX[loopThree] + canvas.width/20 && enemyPositionX[loopFour] > wallPositionX[loopThree] - canvas.width/20) && (enemyPositionY[loopFour] < wallPositionY[loopThree] + canvas.width/20 && enemyPositionY[loopFour] > wallPositionY[loopThree] - canvas.width/20)) {
-					
+			for(loopFour = 0; loopFour < enemyType.length; loopFour+=1) {		
+				if ( (enemyPositionX[loopFour] < wallPositionX[loopThree] + canvas.width/20 && enemyPositionX[loopFour] > wallPositionX[loopThree] - canvas.width/20) && (enemyPositionY[loopFour] < wallPositionY[loopThree] + canvas.width/20 && enemyPositionY[loopFour] > wallPositionY[loopThree] - canvas.width/20) && (enemyType[loopFour] == 2 || enemyType[loopFour] == 3)) {
 					enemyPositionX[loopFour] = enemyPositionX[loopFour] - (1/2)*enemyVelocityX[loopFour];
 					enemyPositionY[loopFour] = enemyPositionY[loopFour] - (1/2)*enemyVelocityY[loopFour];
 					enemyVelocityX[loopFour] = (-1/2)*enemyVelocityX[loopFour];
 					enemyVelocityY[loopFour] = (-1/2)*enemyVelocityY[loopFour];
-					wallPositionX[loopThree] = wallPositionX[loopThree] + canvas.width/20*((wallPositionX[loopThree] - enemyPositionX[loopFour])/Math.abs(wallPositionX[loopThree] - enemyPositionX[loopFour]));
-					
-				}
-					
+					wallPositionX[loopThree] = wallPositionX[loopThree] + canvas.width/20*((wallPositionX[loopThree] - enemyPositionX[loopFour])/Math.abs(wallPositionX[loopThree] - enemyPositionX[loopFour]));	
+				}		
 			}
-		
-		}
-		
-	}
-	
+		}	
+	}	
 }
 function wallArrowTouchOff(event) {	
 	breaker = 1;
@@ -520,21 +489,16 @@ function wallArrowTouchOff(event) {
 
 
 
+// wallCloudTouch Function
 function wallCloudTouch(event) {
-	
-	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {
-					
+	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {		
+
+		// wallCloudTouch
 		if (wallDefaultType[loopThree] == 6) {
-			
-			if (event.offsetX < wallPositionX[loopThree] + canvas.width/20 && event.offsetX > wallPositionX[loopThree] && event.offsetY < wallPositionY[loopThree] + canvas.width/20 && event.offsetY > wallPositionY[loopThree]) {
-				
-				wallType[loopThree] = 7;
-				
-			}
-			
-		}
-	
-	}
-		
+			if (event.offsetX < wallPositionX[loopThree] + canvas.width/20 && event.offsetX > wallPositionX[loopThree] && event.offsetY < wallPositionY[loopThree] + canvas.width/20 && event.offsetY > wallPositionY[loopThree]) {			
+				wallType[loopThree] = 7;			
+			}		
+		}	
+	}		
 }
 
