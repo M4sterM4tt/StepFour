@@ -447,12 +447,12 @@ function render() {
 
 
 // wallArrowTouch Functions
-function wallArrowTouchOn(event) {
+canvas.addEventListener("touchstart", function (event) {
 	event.preventDefault() 
 	breaker = 0;	
 	alert("1")
-}
-function wallArrowTouchMove(event) {
+});
+canvas.addEventListener("touchmove", function (event) {
 	event.preventDefault() 
 	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {	
 
@@ -488,12 +488,12 @@ function wallArrowTouchMove(event) {
 		}	
 	}
 	alert("2")	
-}
-function wallArrowTouchOff(event) {
+});
+canvas.addEventListener("touchend", function (event) {
 	event.preventDefault() 
 	breaker = 1;
 	alert("3")	
-}
+});
 
 
 
@@ -511,3 +511,21 @@ function wallCloudTouch(event) {
 	}		
 }
 
+
+
+
+document.body.addEventListener("touchstart", function (e) {
+  if (e.target == canvas) {
+    e.preventDefault();
+  }
+}, false);
+document.body.addEventListener("touchend", function (e) {
+  if (e.target == canvas) {
+    e.preventDefault();
+  }
+}, false);
+document.body.addEventListener("touchmove", function (e) {
+  if (e.target == canvas) {
+    e.preventDefault();
+  }
+}, false);
