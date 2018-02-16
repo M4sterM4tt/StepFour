@@ -232,7 +232,7 @@ function render() {
 			// wallCloudTilt
 			if (wallDefaultType[loop] == 5) {
 				for(loopTwo = 0; loopTwo < enemyType.length; loopTwo+=1) {
-					if ((deviceMotionEvent.accelerationIncludingGravity.x)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.x)) != 1 || (deviceMotionEvent.accelerationIncludingGravity.y)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.y)) != 1 ) {
+					if (((deviceMotionEvent.accelerationIncludingGravity.x)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.x)) != 1 && Math.abs(deviceMotionEvent.accelerationIncludingGravity.x) >= 3)|| (deviceMotionEvent.accelerationIncludingGravity.y)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.y)) != 1 && Math.abs(deviceMotionEvent.accelerationIncludingGravity.x) >= 3) {
 						wallType[loop] = 7;
 					}
 					else if (((playerPositionX[1] >= wallPositionX[loop] + canvas.width/20 || playerPositionX[1] <= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] >= wallPositionY[loop] + canvas.width/20 || playerPositionY[1] <= wallPositionY[loop] - canvas.width/20)) && ((enemyPositionX[loopTwo] >= wallPositionX[loop] + canvas.width/20 || enemyPositionX[loopTwo] <= wallPositionX[loop] - canvas.width/20) && (enemyPositionY[loopTwo] >= wallPositionY[loop] + canvas.width/20 || enemyPositionY[loopTwo] <= wallPositionY[loop] - canvas.width/20))) {
@@ -448,10 +448,12 @@ function render() {
 
 // wallArrowTouch Functions
 function wallArrowTouchOn(event) {
+	alert ("Hi_1")
 	event.preventDefault() 
 	breaker = 0;	
 }
 function wallArrowTouchMove(event) {
+	alert ("Hi_2")
 	event.preventDefault() 
 	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {	
 
@@ -488,6 +490,7 @@ function wallArrowTouchMove(event) {
 	}	
 }
 function wallArrowTouchOff(event) {
+	alert ("Hi_3")
 	event.preventDefault() 
 	breaker = 1;
 }
