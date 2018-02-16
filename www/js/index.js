@@ -446,14 +446,8 @@ function render() {
 
 
 
-// wallArrowTouch Functions
-function wallArrowTouchOn(event) {
-	alert ("Hi_1")
-	event.preventDefault() 
-	breaker = 0;	
-}
 function wallArrowTouchMove(event) {
-	alert ("Hi_2")
+	breaker = 0;	
 	event.preventDefault() 
 	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {	
 
@@ -487,12 +481,8 @@ function wallArrowTouchMove(event) {
 				}		
 			}
 		}	
-	}	
-}
-function wallArrowTouchOff(event) {
-	alert ("Hi_3")
-	event.preventDefault() 
-	breaker = 1;
+	}
+	breaker = 1;	
 }
 
 
