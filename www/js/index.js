@@ -5,6 +5,7 @@
 // NEED TO REFRENCE THIS https://mobiforge.com/design-development/html5-mobile-web-canvas
 // NEED TO REFRENCE THIS https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Managing_screen_orientation
 // NEED TO REFRENCE THIS https://www.w3schools.com/tags/ref_eventattributes.asp
+// NEED TO REFRENCE THIS http://bencentra.com/code/2014/12/05/html5-canvas-touch-events.html
 
 // Canvas Variables 
 var canvas; 
@@ -56,9 +57,9 @@ var loop;
 var loopTwo;
 var loopThree;
 var loopFour;
-
-
-
+var touch;
+var touchX;
+var touchY;
 
 window.onload = function() {
 	
@@ -107,6 +108,9 @@ window.onload = function() {
 	wallAccelerationZ = [0,0,0,0,0,0,0];
 	limit = 0;
 	breaker = 1;
+	touch = 0;
+	touchX = 0;
+	touchY = 0;
 	
 	
 	// Add Base and Player
@@ -450,16 +454,18 @@ function render() {
 window.addEventListener("touchstart", function (event) {
 	event.preventDefault();
 	breaker = 0;	
-	console.log(event.offsetX + "___" + event.offsetY);
 });
 window.addEventListener("touchmove", function (event) {
 	event.preventDefault();
+	touch = event.touches[0];
+	x = touch.pageX;
+	y = touch.pageY;
 	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {	
 
 		// wallArrowTouch
 		if (wallDefaultType[loopThree] == 3 && breaker == 0) {
-			if (event.offsetX < wallPositionX[loopThree] + 2*canvas.width/20 && event.offsetX > wallPositionX[loopThree] - 2*canvas.width/30 && event.offsetY < wallPositionY[loopThree] + 2*canvas.width/20 && event.offsetY > wallPositionY[loopThree]  - 2*canvas.width/20) {	
-				wallPositionX[loopThree] = event.offsetX;	
+			if (touch.pageX < wallPositionX[loopThree] + 2*canvas.width/20 && touch.pageX > wallPositionX[loopThree] - 2*canvas.width/30 && touch.pageY < wallPositionY[loopThree] + 2*canvas.width/20 && touch.pageY > wallPositionY[loopThree]  - 2*canvas.width/20) {	
+				wallPositionX[loopThree] = touch.pageX;	
 			}
 			
 	
@@ -487,38 +493,12 @@ window.addEventListener("touchmove", function (event) {
 			}
 		}	
 	}
-	console.log(event.offsetX + "___" + event.offsetY);
+	console.log( touch.pageX + "___" +  touch.pageY );
 });
 window.addEventListener("touchend", function (event) {
 	event.preventDefault();
 	breaker = 1;
-	console.log(event.offsetX + "___" + event.offsetY);
 });
-
-
-
-
-//canvas.addEventListener("touchstart", function (e) {
-//        mousePos = getTouchPos(canvas, e);
-//  var touch = e.touches[0];
-//  var mouseEvent = new MouseEvent("mousedown", {
-//   clientX: touch.clientX,
-//    clientY: touch.clientY
-//  });
-//  canvas.dispatchEvent(mouseEvent);
-//}, false);
-//canvas.addEventListener("touchend", function (e) {
-//  var mouseEvent = new MouseEvent("mouseup", {});
-//  canvas.dispatchEvent(mouseEvent);
-//}, false);
-//canvas.addEventListener("touchmove", function (e) {
-//  var touch = e.touches[0];
-//  var mouseEvent = new MouseEvent("mousemove", {
-//    clientX: touch.clientX,
-//   clientY: touch.clientY
-//  });
-//  canvas.dispatchEvent(mouseEvent);
-//}, false);
 
 
 
