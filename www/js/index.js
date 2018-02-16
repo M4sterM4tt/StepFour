@@ -464,7 +464,7 @@ window.addEventListener("touchmove", function (event) {
 
 		// wallArrowTouch
 		if (wallDefaultType[loopThree] == 3 && breaker == 0) {
-			if (touch.pageX < wallPositionX[loopThree] + canvas.width/20 && touch.pageX > wallPositionX[loopThree] && touch.pageY < wallPositionY[loopThree] + canvas.width/20 && touch.pageY > wallPositionY[loopThree]) {	
+			if (touch.pageX < wallPositionX[loopThree] + 2*canvas.width/20 && touch.pageX > wallPositionX[loopThree] - canvas.width/20 && touch.pageY < wallPositionY[loopThree] + 2*canvas.width/20 && touch.pageY > wallPositionY[loopThree]  - canvas.width/20) {	
 				wallPositionX[loopThree] = touch.pageX;	
 			}
 			
