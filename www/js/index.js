@@ -448,9 +448,11 @@ function render() {
 
 // wallArrowTouch Functions
 function wallArrowTouchOn(event) {
+	event.preventDefault() 
 	breaker = 0;	
 }
 function wallArrowTouchMove(event) {
+	event.preventDefault() 
 	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {	
 
 		// wallArrowTouch
@@ -485,7 +487,8 @@ function wallArrowTouchMove(event) {
 		}	
 	}	
 }
-function wallArrowTouchOff(event) {	
+function wallArrowTouchOff(event) {
+	event.preventDefault() 
 	breaker = 1;
 }
 
