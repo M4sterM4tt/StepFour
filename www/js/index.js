@@ -447,12 +447,12 @@ function render() {
 
 
 // wallArrowTouch Functions
-canvas.addEventListener("touchstart", function (event) {
+window.addEventListener("touchstart", function (event) {
 	event.preventDefault() 
 	breaker = 0;	
-	alert("1")
+	console.log("1");
 });
-canvas.addEventListener("touchmove", function (event) {
+window.addEventListener("touchmove", function (event) {
 	event.preventDefault() 
 	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {	
 
@@ -487,13 +487,38 @@ canvas.addEventListener("touchmove", function (event) {
 			}
 		}	
 	}
-	alert("2")	
+	console.log("2");	
 });
-canvas.addEventListener("touchend", function (event) {
+window.addEventListener("touchend", function (event) {
 	event.preventDefault() 
 	breaker = 1;
-	alert("3")	
+	console.log("3");	
 });
+
+
+
+
+//canvas.addEventListener("touchstart", function (e) {
+//        mousePos = getTouchPos(canvas, e);
+//  var touch = e.touches[0];
+//  var mouseEvent = new MouseEvent("mousedown", {
+//   clientX: touch.clientX,
+//    clientY: touch.clientY
+//  });
+//  canvas.dispatchEvent(mouseEvent);
+//}, false);
+//canvas.addEventListener("touchend", function (e) {
+//  var mouseEvent = new MouseEvent("mouseup", {});
+//  canvas.dispatchEvent(mouseEvent);
+//}, false);
+//canvas.addEventListener("touchmove", function (e) {
+//  var touch = e.touches[0];
+//  var mouseEvent = new MouseEvent("mousemove", {
+//    clientX: touch.clientX,
+//   clientY: touch.clientY
+//  });
+//  canvas.dispatchEvent(mouseEvent);
+//}, false);
 
 
 
@@ -510,22 +535,3 @@ function wallCloudTouch(event) {
 		}	
 	}		
 }
-
-
-
-
-document.body.addEventListener("touchstart", function (e) {
-  if (e.target == canvas) {
-    e.preventDefault();
-  }
-}, false);
-document.body.addEventListener("touchend", function (e) {
-  if (e.target == canvas) {
-    e.preventDefault();
-  }
-}, false);
-document.body.addEventListener("touchmove", function (e) {
-  if (e.target == canvas) {
-    e.preventDefault();
-  }
-}, false);
