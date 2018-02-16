@@ -448,12 +448,12 @@ function render() {
 
 // wallArrowTouch Functions
 window.addEventListener("touchstart", function (event) {
-	event.preventDefault() 
+	event.preventDefault();
 	breaker = 0;	
-	console.log("1");
+	console.log(event.offsetX + "___" + event.offsetY);
 });
 window.addEventListener("touchmove", function (event) {
-	event.preventDefault() 
+	event.preventDefault();
 	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {	
 
 		// wallArrowTouch
@@ -487,12 +487,12 @@ window.addEventListener("touchmove", function (event) {
 			}
 		}	
 	}
-	console.log("2");	
+	console.log(event.offsetX + "___" + event.offsetY);
 });
 window.addEventListener("touchend", function (event) {
-	event.preventDefault() 
+	event.preventDefault();
 	breaker = 1;
-	console.log("3");	
+	console.log(event.offsetX + "___" + event.offsetY);
 });
 
 
