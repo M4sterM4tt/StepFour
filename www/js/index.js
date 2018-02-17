@@ -240,10 +240,18 @@ function render() {
 			if (wallDefaultType[loop] == 5) {
 				for(loopTwo = 0; loopTwo < enemyType.length; loopTwo+=1) {
 					if ((previous/Math.abs(previous) != deviceMotionEvent.accelerationIncludingGravity.x/Math.abs(deviceMotionEvent.accelerationIncludingGravity.x) || previousTwo/Math.abs(previousTwo) != deviceMotionEvent.accelerationIncludingGravity.y/Math.abs(deviceMotionEvent.accelerationIncludingGravity.y))) {
-						wallType[loop] = 7;
-					}
-					else if (((playerPositionX[1] >= wallPositionX[loop] + canvas.width/20 || playerPositionX[1] <= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] >= wallPositionY[loop] + canvas.width/20 || playerPositionY[1] <= wallPositionY[loop] - canvas.width/20)) && ((enemyPositionX[loopTwo] >= wallPositionX[loop] + canvas.width/20 || enemyPositionX[loopTwo] <= wallPositionX[loop] - canvas.width/20) && (enemyPositionY[loopTwo] >= wallPositionY[loop] + canvas.width/20 || enemyPositionY[loopTwo] <= wallPositionY[loop] - canvas.width/20))) {
-						wallType[loop] = 5;
+						limitTwo = -1*limitTwo;
+						if (limitTwo == 1) {
+							wallType[loop] = 5;
+						}
+						if (limitTwo == -1) {
+							if (((playerPositionX[1] >= wallPositionX[loop] + canvas.width/20 || playerPositionX[1] <= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] >= wallPositionY[loop] + canvas.width/20 || playerPositionY[1] <= wallPositionY[loop] - canvas.width/20)) && ((enemyPositionX[loopTwo] >= wallPositionX[loop] + canvas.width/20 || enemyPositionX[loopTwo] <= wallPositionX[loop] - canvas.width/20) && (enemyPositionY[loopTwo] >= wallPositionY[loop] + canvas.width/20 || enemyPositionY[loopTwo] <= wallPositionY[loop] - canvas.width/20))) {
+								wallType[loop] = 5;
+							}
+							else {
+								wallType[loop] = 7;
+							}
+						}
 					}
 				}
 				previous = deviceMotionEvent.accelerationIncludingGravity.x;
