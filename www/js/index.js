@@ -53,13 +53,12 @@ var wallAccelerationZ;
 var renderTime;
 var limit;
 var breaker;
+var touch;
 var loop;
 var loopTwo;
 var loopThree;
 var loopFour;
-var touch;
-var touchX;
-var touchY;
+
 
 window.onload = function() {
 	
@@ -109,8 +108,6 @@ window.onload = function() {
 	limit = 0;
 	breaker = 1;
 	touch = 0;
-	touchX = 0;
-	touchY = 0;
 	
 	
 	// Add Base and Player
@@ -451,15 +448,25 @@ function render() {
 
 
 // wallArrowTouch Functions
-window.addEventListener("touchstart", function (event) {
-	event.preventDefault();
-	breaker = 0;	
-});
-window.addEventListener("touchmove", function (event) {
+window.addEventListener("touchstart", function wallArrowTouchStart(event) {
 	event.preventDefault();
 	touch = event.touches[0];
-	x = touch.pageX;
-	y = touch.pageY;
+	breaker = 0;
+
+	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {		
+
+		// wallCloudTouch
+		if (wallDefaultType[loopThree] == 6) {
+			if (touch.pageX < wallPositionX[loopThree] + canvas.width/20 && touch.pageX > wallPositionX[loopThree] && touch.pageY < wallPositionY[loopThree] + canvas.width/20 && touch.pageY > wallPositionY[loopThree]) {			
+				wallType[loopThree] = 7;			
+			}		
+		}	
+	}		
+	
+});
+window.addEventListener("touchmove", function wallArrowTouchMove(event) {
+	event.preventDefault();
+	touch = event.touches[0];
 	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {	
 
 		// wallArrowTouch
@@ -493,25 +500,8 @@ window.addEventListener("touchmove", function (event) {
 			}
 		}	
 	}
-	console.log( touch.pageX + "___" +  touch.pageY );
 });
-window.addEventListener("touchend", function (event) {
+window.addEventListener("touchend", function wallArrowTouchEnd(event) {
 	event.preventDefault();
 	breaker = 1;
 });
-
-
-
-
-// wallCloudTouch Function
-function wallCloudTouch(event) {
-	for(loopThree = 0; loopThree < wallType.length; loopThree+=1) {		
-
-		// wallCloudTouch
-		if (wallDefaultType[loopThree] == 6) {
-			if (event.offsetX < wallPositionX[loopThree] + canvas.width/20 && event.offsetX > wallPositionX[loopThree] && event.offsetY < wallPositionY[loopThree] + canvas.width/20 && event.offsetY > wallPositionY[loopThree]) {			
-				wallType[loopThree] = 7;			
-			}		
-		}	
-	}		
-}
