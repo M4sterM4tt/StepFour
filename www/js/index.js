@@ -53,6 +53,7 @@ var wallAccelerationZ;
 var renderTime;
 var limit;
 var limitTwo;
+var switcher;
 var previous;
 var previousTwo;
 var breaker;
@@ -109,7 +110,8 @@ window.onload = function() {
 	wallAccelerationY = [0,0,0,0,0,0,0];
 	wallAccelerationZ = [0,0,0,0,0,0,0];
 	limit = 0;
-	limitTwo = 1;
+	limitTwo = 0;
+	switcher = 1;
 	previous = 1;
 	previousTwo = 1;
 	breaker = 1;
@@ -240,11 +242,11 @@ function render() {
 			if (wallDefaultType[loop] == 5) {
 				for(loopTwo = 0; loopTwo < enemyType.length; loopTwo+=1) {
 					if ((previous/Math.abs(previous) != deviceMotionEvent.accelerationIncludingGravity.x/Math.abs(deviceMotionEvent.accelerationIncludingGravity.x) || previousTwo/Math.abs(previousTwo) != deviceMotionEvent.accelerationIncludingGravity.y/Math.abs(deviceMotionEvent.accelerationIncludingGravity.y))) {
-						limitTwo = -1*limitTwo;
-						if (limitTwo == 1) {
-							wallType[loop] = 5;
+						switcher = -1*switcher;
+						if (switcher == 1) {
+							wallType[loop] = 7;
 						}
-						if (limitTwo == -1) {
+						if (switcher == -1) {
 							if (((playerPositionX[1] >= wallPositionX[loop] + canvas.width/20 || playerPositionX[1] <= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] >= wallPositionY[loop] + canvas.width/20 || playerPositionY[1] <= wallPositionY[loop] - canvas.width/20)) && ((enemyPositionX[loopTwo] >= wallPositionX[loop] + canvas.width/20 || enemyPositionX[loopTwo] <= wallPositionX[loop] - canvas.width/20) && (enemyPositionY[loopTwo] >= wallPositionY[loop] + canvas.width/20 || enemyPositionY[loopTwo] <= wallPositionY[loop] - canvas.width/20))) {
 								wallType[loop] = 5;
 							}
