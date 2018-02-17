@@ -52,6 +52,9 @@ var wallAccelerationZ;
 // Other Variables
 var renderTime;
 var limit;
+var limitTwo;
+var previous;
+var previousTwo;
 var breaker;
 var touch;
 var loop;
@@ -106,6 +109,9 @@ window.onload = function() {
 	wallAccelerationY = [0,0,0,0,0,0,0];
 	wallAccelerationZ = [0,0,0,0,0,0,0];
 	limit = 0;
+	limitTwo = 0;
+	previous = 1;
+	previousTwo = 1;
 	breaker = 1;
 	touch = 0;
 	
@@ -233,13 +239,19 @@ function render() {
 			// wallCloudTilt
 			if (wallDefaultType[loop] == 5) {
 				for(loopTwo = 0; loopTwo < enemyType.length; loopTwo+=1) {
-					if (((deviceMotionEvent.accelerationIncludingGravity.x)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.x)) != 1 && Math.abs(deviceMotionEvent.accelerationIncludingGravity.x) > 2) || ((deviceMotionEvent.accelerationIncludingGravity.y)/(Math.abs(deviceMotionEvent.accelerationIncludingGravity.y)) != 1 && Math.abs(deviceMotionEvent.accelerationIncludingGravity.y) > 2)) {
+					if ((previous/Math.abs(previous) != deviceMotionEvent.accelerationIncludingGravity.x/Math.abs(deviceMotionEvent.accelerationIncludingGravity.x) || previousTwo/Math.abs(previousTwo) != deviceMotionEvent.accelerationIncludingGravity.y/Math.abs(deviceMotionEvent.accelerationIncludingGravity.y)) && (Math.abs(deviceMotionEvent.accelerationIncludingGravity.x) > 2 || Math.abs(deviceMotionEvent.accelerationIncludingGravity.y) > 2 )) {
 						wallType[loop] = 7;
+						limitTwo = 1;
 					}
 					else if (((playerPositionX[1] >= wallPositionX[loop] + canvas.width/20 || playerPositionX[1] <= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] >= wallPositionY[loop] + canvas.width/20 || playerPositionY[1] <= wallPositionY[loop] - canvas.width/20)) && ((enemyPositionX[loopTwo] >= wallPositionX[loop] + canvas.width/20 || enemyPositionX[loopTwo] <= wallPositionX[loop] - canvas.width/20) && (enemyPositionY[loopTwo] >= wallPositionY[loop] + canvas.width/20 || enemyPositionY[loopTwo] <= wallPositionY[loop] - canvas.width/20))) {
-						wallType[loop] = 5;
+						limitTwo = limitTwo - 0.1;
+						if (limitTwo < 0) {
+							wallType[loop] = 5;
+						}
 					}
 				}
+				previous = deviceMotionEvent.accelerationIncludingGravity.x;
+				previousTwo = deviceMotionEvent.accelerationIncludingGravity.y;
 			}
 		}	
 	}
