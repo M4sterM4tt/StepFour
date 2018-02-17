@@ -241,7 +241,7 @@ function render() {
 			// wallCloudTilt
 			if (wallDefaultType[loop] == 5) {
 				for(loopTwo = 0; loopTwo < enemyType.length; loopTwo+=1) {
-					if ((previous/Math.abs(previous) != deviceMotionEvent.accelerationIncludingGravity.x/Math.abs(deviceMotionEvent.accelerationIncludingGravity.x) || previousTwo/Math.abs(previousTwo) != deviceMotionEvent.accelerationIncludingGravity.y/Math.abs(deviceMotionEvent.accelerationIncludingGravity.y))) {
+					if ((previous/Math.abs(previous) != deviceMotionEvent.accelerationIncludingGravity.x/Math.abs(deviceMotionEvent.accelerationIncludingGravity.x) || previousTwo/Math.abs(previousTwo) != deviceMotionEvent.accelerationIncludingGravity.y/Math.abs(deviceMotionEvent.accelerationIncludingGravity.y)) && (Math.abs(deviceMotionEvent.accelerationIncludingGravity.x) > 1 || Math.abs(deviceMotionEvent.accelerationIncludingGravity.y > 1))) {
 						switcher = -1*switcher;
 						if (switcher == 1) {
 							wallType[loop] = 7;
