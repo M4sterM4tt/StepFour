@@ -239,15 +239,11 @@ function render() {
 			// wallCloudTilt
 			if (wallDefaultType[loop] == 5) {
 				for(loopTwo = 0; loopTwo < enemyType.length; loopTwo+=1) {
-					if ((previous/Math.abs(previous) != deviceMotionEvent.accelerationIncludingGravity.x/Math.abs(deviceMotionEvent.accelerationIncludingGravity.x) || previousTwo/Math.abs(previousTwo) != deviceMotionEvent.accelerationIncludingGravity.y/Math.abs(deviceMotionEvent.accelerationIncludingGravity.y)) && (Math.abs(deviceMotionEvent.accelerationIncludingGravity.x) > 2 || Math.abs(deviceMotionEvent.accelerationIncludingGravity.y) > 2 )) {
+					if ((previous/Math.abs(previous) != deviceMotionEvent.accelerationIncludingGravity.x/Math.abs(deviceMotionEvent.accelerationIncludingGravity.x) || previousTwo/Math.abs(previousTwo) != deviceMotionEvent.accelerationIncludingGravity.y/Math.abs(deviceMotionEvent.accelerationIncludingGravity.y))) {
 						wallType[loop] = 7;
-						limitTwo = 1;
 					}
 					else if (((playerPositionX[1] >= wallPositionX[loop] + canvas.width/20 || playerPositionX[1] <= wallPositionX[loop] - canvas.width/20) && (playerPositionY[1] >= wallPositionY[loop] + canvas.width/20 || playerPositionY[1] <= wallPositionY[loop] - canvas.width/20)) && ((enemyPositionX[loopTwo] >= wallPositionX[loop] + canvas.width/20 || enemyPositionX[loopTwo] <= wallPositionX[loop] - canvas.width/20) && (enemyPositionY[loopTwo] >= wallPositionY[loop] + canvas.width/20 || enemyPositionY[loopTwo] <= wallPositionY[loop] - canvas.width/20))) {
-						limitTwo = limitTwo - 0.1;
-						if (limitTwo < 0) {
-							wallType[loop] = 5;
-						}
+						wallType[loop] = 5;
 					}
 				}
 				previous = deviceMotionEvent.accelerationIncludingGravity.x;
